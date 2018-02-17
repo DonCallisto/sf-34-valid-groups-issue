@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Foo
 {
     /**
-     * @Assert\Valid(groups={"Bar", "second"})
+     * @Assert\Valid(groups={"Bar"})
      */
     private $bar;
 

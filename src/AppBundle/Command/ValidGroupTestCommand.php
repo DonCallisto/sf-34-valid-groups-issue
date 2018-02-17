@@ -31,10 +31,14 @@ class ValidGroupTestCommand extends Command
         $bar = new Bar('aValue', null);
         $foo = new Foo($bar);
 
-        $errors = $this->validator->validate($foo, null, ['Bar', 'second']);
-        VarDumper::dump($errors);
+        $errors = $this->validator->validate($foo);
+        VarDumper::dump($errors); // correct
 
-        $errors = $this->validator->validate(new Foo(new Bar(null, null)), null, ['Bar', 'second']);
-        VarDumper::dump($errors);
+        $errors = $this->validator->validate($foo, null, ['Bar']);
+        VarDumper::dump($errors); // expected to have only an error with PP `foo.second` (wrong!)
+        // I know that `Bar` is not `Default` but there's no way to obtain this case :(
+
+        $errors = $this->validator->validate(new Foo(new Bar(null, null)), null, ['Bar']);
+        VarDumper::dump($errors); // expected to have only an error with PP `foo.first` (correct)
     }
 }
